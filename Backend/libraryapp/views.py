@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from django.shortcuts import render
 from .models import User, Book, BorrowRecord, Category
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
@@ -7,9 +7,10 @@ from django.utils import timezone
 from .serializers import UserSerializer, BookSerializer, BorrowRecordSerializer, CategorySerializer
 from rest_framework import filters
 from rest_framework.response import Response
-from rest_framework.decorators import action
+from rest_framework.decorators import action, api_view
 from rest_framework.exceptions import ValidationError
 from django_filters.rest_framework import DjangoFilterBackend
+
 
 # Fixed UserViewSet - removed duplicate class definition
 class UserViewSet(viewsets.ModelViewSet):
@@ -119,3 +120,12 @@ class CategoryViewSet(viewsets.ModelViewSet):
         else:
             permission_classes = [IsAdminUser]
         return [permission() for permission in permission_classes]
+
+
+# after office
+
+
+@api_view(['POST'])
+def login_view(request):
+    # Your login logic here
+    return Response({"message": "Login successful"}, status=status.HTTP_200_OK)
